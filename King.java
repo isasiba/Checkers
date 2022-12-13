@@ -8,12 +8,8 @@ public class King extends Piece {
         yvalue = c;
     }
 
-    public boolean move(int ir, int ic, int er, int ec, boolean r, Board a) {
-        return true;
-    }
-
-    public boolean canItMoveThere(int ir, int ic, int er, int ec, boolean r, Board a) {
-        return true;
+    public void move(int ir, int ic, int er, int ec, boolean r, Board a) {
+        
     }
 
     public boolean id(int ir, int ic, int er, int ec, boolean r) {

@@ -27,20 +27,20 @@ public class Player {
                     int y = j;
                     if (r) {
                         if (x - 1 > 0 && x + 1 < 8 && y + 1 < 8) {
-                            if (temp.canItMoveThere(i, j, i + 1, j + 1, r, a)) {
+                            if (temp.id(i, j, i + 1, j + 1, r)) {
                                 go = false;
                             }
-                            if (temp.canItMoveThere(i, j, i - 1, j + 1, r, a)) {
+                            if (temp.id(i, j, i - 1, j + 1, r)) {
                                 go = false;
                             }
                         }
                     }
                     else {
                         if (x - 1 > 0 && x + 1 < 8 && y - 1 > 0) {
-                            if (temp.canItMoveThere(i, j, i + 1, j - 1, r, a)) {
+                            if (temp.id(i, j, i + 1, j - 1, r)) {
                                 go = false;
                             }
-                            if (temp.canItMoveThere(i, j, i - 1, j - 1, r, a)) {
+                            if (temp.id(i, j, i - 1, j - 1, r)) {
                                 go = false;
                             }
                         }

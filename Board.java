@@ -108,12 +108,42 @@ public class Board {
         }
     }
 
-    public boolean canItMoveThere(int ix, int iy) {
+    public boolean canItMoveThereIntially(String s, Player p) {
+        if (s.length() != 2) {
+            return false;
+        }
+        int iy = s.charAt(0) - 'a';
+        int ix = Integer.parseInt(s.substring(1, 2)) - 1;
+
         if ((ix > 8 || ix < 0) || (iy > 8 || iy < 0)) {
             return false;
         }
         boolean isPiece = this.getSquare(ix, iy).isOccupied();
         if (!isPiece) {
+            return false;
+        }
+        if (this.getPieceOnSquare(ix, iy).getColor() != p.getColor()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean canItMoveThereAfter(String s) {
+        if (s.length() != 2) {
+            return false;
+        }
+        int iy = s.charAt(0) - 'a';
+        int ix = Integer.parseInt(s.substring(1, 2)) - 1;
+
+        if ((ix > 8 || ix < 0) || (iy > 8 || iy < 0)) {
+            return false;
+        }
+
+        if (this.getSquare(ix, iy).getColor()) {
+            return false;
+        }
+        boolean isPiece = this.getSquare(ix, iy).isOccupied();
+        if (isPiece) {
             return false;
         }
         return true;

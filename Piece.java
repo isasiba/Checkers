@@ -28,10 +28,35 @@ public abstract class Piece {
         }
     }
 
+    public boolean upRight(int ir, int ic, int er, int ec) {
+        if (er > ir && ec > ic) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean upLeft(int ir, int ic, int er, int ec) {
+        if (er > ir && ic > ec) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean downLeft(int ir, int ic, int er, int ec) {
+        if (er < ir && ec < ic) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean downRight(int ir, int ic, int er, int ec) {
+        if (er < ir && ec > ic) {
+            return true;
+        }
+        return false;
+    }
 
     public abstract void move(int ir, int ic, int er, int ec, boolean r, Board a);
-
-    public abstract boolean canItMoveThere(int ir, int ic, int er, int ec, boolean r, Board a);
 
     public abstract double getXvalue();
 
