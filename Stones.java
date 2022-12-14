@@ -25,19 +25,19 @@ public class Stones extends Piece {
         c.setPiece(this);
         a.getSquare(ir, ic).leave();
         if (this.upLeft(ir, ic, er, ec)) {
-            Square d = a.getSquare(er - 1, ec + 1);
+            Square d = a.getSquare(ir + 1, ic - 1);
             d.leave();
         }
         else if (this.upRight(ir, ic, er, ec)) {
-            Square d = a.getSquare(er - 1, ec - 1);
+            Square d = a.getSquare(ir + 1, ic + 1);
             d.leave();
         }
         else if (this.downLeft(ir, ic, er, ec)) {
-            Square d = a.getSquare(ec + 1, er + 1);
+            Square d = a.getSquare(ir - 1, ic - 1);
             d.leave();
         }
         else {
-            Square d = a.getSquare(ec - 1, er + 1);
+            Square d = a.getSquare(ir - 1, ic + 1);
             d.leave();
         }
 
@@ -45,35 +45,41 @@ public class Stones extends Piece {
 
 
     public boolean canItJump(int ir, int ic, int er, int ec, boolean r, Board a) {
-        if (r) {
-            if (er - ir == 2 && Math.abs(ec - ic) == 2 && ec > 0 && er < 8
-                    && ec < 8 && er > 0) {
-                // move left
-                if (ec < ic) {
-                    if (a.getSquare(er - 1, ec + 1).getPiece().getColor() != r) {
-                        return true;
-                    }
-                }
-                // move right
-                else {
-                    if (a.getSquare(er - 1, ec - 1).getPiece().getColor() != r) {
-                        return true;
-                    }
+        if (this.upLeft(ir, ic, er, ec) && r) {
+            int irr = ir + 1;
+            int icc = ic - 1;
+            if (this.id(ir, ic, irr, icc, r) && a.getSquare(irr, icc).isOccupied()) {
+                if (this.id(irr, icc, er, ec, r) && !a.getPieceOnSquare(irr, icc).getColor()) {
+                    return true;
                 }
             }
         }
-        else {
-            if (er - ir == -2 && Math.abs(ec - ic) == 2 && ec >= 0 && er >= 0
-                    && ec < 8) {
-                if (ec < ic) {
-                    if (a.getSquare(ec + 1, er + 1).getPiece().getColor() != r) {
-                        return true;
-                    }
+        else if (this.upRight(ir, ic, er, ec) && r) {
+            int irr = ir + 1;
+            int icc = ic + 1;
+            if (this.id(ir, ic, irr, icc, r) && a.getSquare(irr, icc).isOccupied()) {
+                if (this.id(irr, icc, er, ec, r) && !a.getPieceOnSquare(irr, icc).getColor()) {
+                    return true;
                 }
-                else {
-                    if (a.getSquare(ec - 1, er + 1).getPiece().getColor() != r) {
-                        return true;
-                    }
+            }
+
+        }
+        else if (this.downLeft(ir, ic, er, ec) && !r) {
+            int irr = ir - 1;
+            int icc = ic - 1;
+            if (this.id(ir, ic, irr, icc, r) && a.getSquare(irr, icc).isOccupied()) {
+                if (this.id(irr, icc, er, ec, r) && a.getPieceOnSquare(irr, icc).getColor()) {
+                    return true;
+                }
+            }
+
+        }
+        else if (this.downRight(ir, ic, er, ec) && !r) {
+            int irr = ir - 1;
+            int icc = ic + 1;
+            if (this.id(ir, ic, irr, icc, r) && a.getSquare(irr, icc).isOccupied()) {
+                if (this.id(irr, icc, er, ec, r) && a.getPieceOnSquare(irr, icc).getColor()) {
+                    return true;
                 }
             }
         }

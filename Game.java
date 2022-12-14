@@ -1,28 +1,4 @@
 public class Game {
-    // private final Object keyLock = new Object();
-    // private LinkedList<Character> keysTyped = new LinkedList<Character>();
-    //
-    // public void keyTyped(KeyEvent e) {
-    //     synchronized (keyLock) {
-    //         char c = Character.toLowerCase(e.getKeyChar());
-    //         keysTyped.addFirst(c);
-    //     }
-    //
-    //     public char nextKeyPlayed() {
-    //         synchronized (keyLock) {
-    //             if (keysTyped.isEmpty()) {
-    //                 throw new NoSuchElementException(
-    //                         "your program has already processed all typed keys");
-    //             }
-    //             return keysTyped.removeLast();
-    //         }
-    //     }
-    //
-    //     public boolean hasNextKeyPlayed() {
-    //         synchronized (keyLock) {
-    //             return !keysTyped.isEmpty();
-    //         }
-    //     }
 
 
     public static void main(String[] args) {
@@ -55,6 +31,14 @@ public class Game {
                     p1 + ", what square is the piece you want to move CURRENTLY on? ");
             StdOut.println(
                     "Please remember to use the associated number and letter of the square (e.g. e1)");
+            // Keyboard keyboard = new Keyboard();
+            // String keyboardString = "abcdefgh";
+            // while (true){
+            //     if (keyboard.hasNextKeyPlayed()){
+            //         char key = keyboard.nextKeyPlayed();
+            //         int z = keyboardString.indexOf(key);
+            //     }
+            // }
             String oldplace = StdIn.readString();
 
             // checks to make sure its a valid square
@@ -122,8 +106,50 @@ public class Game {
             }
 
             // updates drawing
+            gameboard.update(gameboard);
             gameboard.drawBoard();
             gameboard.drawPieces();
+
+            StdOut.println(
+                    "If there's a possible jump, you can move again. Would you like to do so? "
+                            + "Press y for yes, n for no.");
+            String answer = StdIn.readString().toLowerCase();
+
+            // fix print statements
+            while (answer.equals("y")) {
+                StdOut.println(
+                        "If there's a possible jump, you can move again. Would you like to do so? "
+                                + "Press y for yes, n for no.");
+                answer = StdIn.readString().toLowerCase();
+                if (answer.equals("y")) {
+                    System.out.println(
+                            p1 + ", what square would you like to move your piece to?");
+                    String newDestination = StdIn.readString();
+
+                    // checks to make sure destination is a valid square
+                    boolean v = gameboard.canItMoveThereAfter(newDestination);
+                    while (!v) {
+                        System.out.println("Not a valid square. Please try again.");
+                        String plea = StdIn.readString();
+                        newDestination = plea;
+                        v = gameboard.canItMoveThereAfter(plea);
+                    }
+                    int newC = newDestination.charAt(0) - 'a';
+                    int newR = Integer.parseInt(newDestination.substring(1, 2)) - 1;
+
+                    // make sure that its a valid jump
+                    boolean isValidJump = current.canItJump(newRow, newColumn, newR, newC,
+                                                            current.getColor(),
+                                                            gameboard);
+                    if (isValidJump) {
+                        current.jump(newRow, newColumn, newR, newC, current.getColor(), gameboard);
+                    }
+                    newRow = newR;
+                    newColumn = newC;
+
+                }
+            }
+
 
             // checks to make sure game isn't over
             if (player1.gameOverStones(gameboard)) {
@@ -205,8 +231,49 @@ public class Game {
             }
 
             // updates drawing
+            gameboard.update(gameboard);
             gameboard.drawBoard();
             gameboard.drawPieces();
+
+            StdOut.println(
+                    "If there's a possible jump, you can move again. Would you like to do so? "
+                            + "Press y for yes, n for no.");
+            String answer2 = StdIn.readString().toLowerCase();
+            while (answer2.equals("y")) {
+                StdOut.println(
+                        "If there's a possible jump, you can move again. Would you like to do so? "
+                                + "Press y for yes, n for no.");
+                answer2 = StdIn.readString().toLowerCase();
+                if (answer2.equals("y")) {
+                    System.out.println(
+                            p2 + ", what square would you like to move your piece to?");
+                    String newDestination2 = StdIn.readString();
+
+                    // checks to make sure destination is a valid square
+                    boolean v2 = gameboard.canItMoveThereAfter(newDestination2);
+                    while (!v2) {
+                        System.out.println("Not a valid square. Please try again.");
+                        String plea = StdIn.readString();
+                        newDestination2 = plea;
+                        v2 = gameboard.canItMoveThereAfter(plea);
+                    }
+                    int newC2 = newDestination2.charAt(0) - 'a';
+                    int newR2 = Integer.parseInt(newDestination2.substring(1, 2)) - 1;
+
+                    // make sure that its a valid jump
+                    boolean isValidJump2 = current2.canItJump(newRow2, newColumn2, newR2, newC2,
+                                                              current2.getColor(),
+                                                              gameboard);
+                    if (isValidJump2) {
+                        current2.jump(newRow2, newColumn2, newR2, newC2, current2.getColor(),
+                                      gameboard);
+                    }
+                    newRow2 = newR2;
+                    newColumn2 = newC2;
+
+                }
+            }
+
 
             // checks to make sure game isn't over
             if (player2.gameOverStones(gameboard)) {
