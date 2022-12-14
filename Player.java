@@ -1,22 +1,20 @@
 public class Player {
-
-    private String n;
+    // saves color of player
     private boolean isRed;
 
-    public Player(String name, boolean r) {
-        n = name;
+    // Player Constructor
+    public Player(boolean r) {
         isRed = r;
     }
 
+    // returns color of player
     public boolean getColor() {
         return isRed;
     }
 
-
+    // determines if the game is over by checking to see if there are any
+    // possible moves any piece can make
     public boolean gameOverStones(Board a) {
-        // if (capturedPieces == 12) {
-        //     return true;
-        // }
         boolean go = true;
         for (int i = 0; i < 8; i++) { // rows
             for (int j = 0; j < 8; j++) { // columns

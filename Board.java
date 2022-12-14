@@ -1,8 +1,11 @@
 import java.awt.Color;
 
 public class Board {
+    // creates an array of squares that will serve as the "board"
     private Square[][] mainboard;
 
+    // constructs a 8 x 8 board by assigning array of squares a color, position,
+    // and piece (or lack thereof)
     public Board() {
         mainboard = new Square[8][8];
         mainboard[0][0] = new Square(true, 1, 1);
@@ -69,13 +72,15 @@ public class Board {
         mainboard[7][5] = new Square(true, 11, 15);
         mainboard[7][6] = new Square(new Stones(false, 13, 15), false, 13, 15);
         mainboard[7][7] = new Square(true, 15, 15);
-
     }
 
+    // takes in two ints: row and column and returns square located at specified
+    // row and column in private square array mainboard
     public Square getSquare(int row, int col) {
         return mainboard[row][col];
     }
 
+    // draws pieces using StdDraw and personal dataset of photos
     public void drawPieces() {
         StdDraw.setScale(0.0, 16.0);
         for (int row = 0; row < 8; row++) {
@@ -83,22 +88,27 @@ public class Board {
                 if (mainboard[row][col].isOccupied()) {
                     Piece p = mainboard[row][col].getPiece();
                     if (p.getColor() && !p.isKing()) {
-                        StdDraw.picture(p.getXvalue(), p.getYvalue(), "RedStone.jpg", 1, 1);
+                        StdDraw.picture(p.getxValue(), p.getyValue(),
+                                        "RedStone.jpg", 1, 1);
                     }
                     else if (!p.getColor() && !p.isKing()) {
-                        StdDraw.picture(p.getXvalue(), p.getYvalue(), "BlackStone.jpg", 1, 1);
+                        StdDraw.picture(p.getxValue(), p.getyValue(),
+                                        "BlackStone.jpg", 1, 1);
                     }
                     else if (p.getColor() && p.isKing()) {
-                        StdDraw.picture(p.getXvalue(), p.getYvalue(), "RedKing.jpg", 1, 1);
+                        StdDraw.picture(p.getxValue(), p.getyValue(),
+                                        "RedKing.jpg", 1, 1);
                     }
                     else {
-                        StdDraw.picture(p.getXvalue(), p.getYvalue(), "BlackKing.jpg", 1, 1);
+                        StdDraw.picture(p.getxValue(), p.getyValue(),
+                                        "BlackKing.jpg", 1, 1);
                     }
                 }
             }
         }
     }
 
+    // draws 8 x 8 red and black checkerboard
     public void drawBoard() {
         StdDraw.setScale(0.0, 16.0);
         for (int row = 0; row < 8; row++) {
@@ -115,6 +125,9 @@ public class Board {
         }
     }
 
+    // checks to make sure that user input for piece they want to move is valid
+    // checks to see if its a valid square on board, if there's a piece on the square,
+    // and if the piece is one of the player's pieces
     public boolean canItMoveThereIntially(String s, Player p) {
         if (s.length() != 2) {
             return false;
@@ -135,6 +148,9 @@ public class Board {
         return true;
     }
 
+    // checks to make sure that the destination user inputed is valid
+    // check to make sure its a row/col located within bounds of array,
+    // a black square, and its unoccupied
     public boolean canItMoveThereAfter(String s) {
         if (s.length() != 2) {
             return false;
@@ -153,58 +169,62 @@ public class Board {
         if (isPiece) {
             return false;
         }
-        
+
         return true;
     }
 
+    // returns piece belonging to specified square
     public Piece getPieceOnSquare(int x, int y) {
         return mainboard[x][y].getPiece();
     }
 
-    public String toString(int ir, int ic) {
-        if (this.getSquare(ir, ic).isOccupied()) {
-            return this.getPieceOnSquare(ir, ic).toString();
-        }
-        return "null";
-    }
-
+    // updates Board if a piece makes it all the way to the other side
+    // of the board and become a King
     public static void update(Board a) {
-        if (!a.getSquare(0, 1).getPiece().getColor() && a.getSquare(0, 1).isOccupied()) {
+        if (!a.getSquare(0, 1).getPiece().getColor() &&
+                a.getSquare(0, 1).isOccupied()) {
             a.getSquare(0, 1).leave();
             King temp = new King(false, 3, 1);
             a.getSquare(0, 1).setPiece(temp);
         }
-        else if (!a.getSquare(0, 3).getPiece().getColor() && a.getSquare(0, 3).isOccupied()) {
+        else if (!a.getSquare(0, 3).getPiece().getColor() &&
+                a.getSquare(0, 3).isOccupied()) {
             a.getSquare(0, 3).leave();
             King temp = new King(false, 7, 1);
             a.getSquare(0, 3).setPiece(temp);
         }
-        else if (!a.getSquare(0, 5).getPiece().getColor() && a.getSquare(0, 5).isOccupied()) {
+        else if (!a.getSquare(0, 5).getPiece().getColor() &&
+                a.getSquare(0, 5).isOccupied()) {
             a.getSquare(0, 5).leave();
             King temp = new King(false, 11, 1);
             a.getSquare(0, 5).setPiece(temp);
         }
-        else if (!a.getSquare(0, 7).getPiece().getColor() && a.getSquare(0, 7).isOccupied()) {
+        else if (!a.getSquare(0, 7).getPiece().getColor() &&
+                a.getSquare(0, 7).isOccupied()) {
             a.getSquare(0, 7).leave();
             King temp = new King(false, 15, 1);
             a.getSquare(0, 7).setPiece(temp);
         }
-        else if (a.getSquare(7, 0).getPiece().getColor() && a.getSquare(7, 0).isOccupied()) {
+        else if (a.getSquare(7, 0).getPiece().getColor() &&
+                a.getSquare(7, 0).isOccupied()) {
             a.getSquare(7, 0).leave();
             King temp = new King(true, 1, 15);
             a.getSquare(7, 0).setPiece(temp);
         }
-        else if (a.getSquare(7, 2).getPiece().getColor() && a.getSquare(7, 0).isOccupied()) {
+        else if (a.getSquare(7, 2).getPiece().getColor() &&
+                a.getSquare(7, 0).isOccupied()) {
             a.getSquare(7, 2).leave();
             King temp = new King(true, 5, 15);
             a.getSquare(7, 2).setPiece(temp);
         }
-        else if (a.getSquare(7, 4).getPiece().getColor() && a.getSquare(7, 0).isOccupied()) {
+        else if (a.getSquare(7, 4).getPiece().getColor() &&
+                a.getSquare(7, 0).isOccupied()) {
             a.getSquare(7, 4).leave();
             King temp = new King(true, 9, 15);
             a.getSquare(7, 4).setPiece(temp);
         }
-        else if (a.getSquare(7, 6).getPiece().getColor() && a.getSquare(7, 0).isOccupied()) {
+        else if (a.getSquare(7, 6).getPiece().getColor() &&
+                a.getSquare(7, 0).isOccupied()) {
             a.getSquare(7, 6).leave();
             King temp = new King(true, 13, 15);
             a.getSquare(7, 6).setPiece(temp);
@@ -213,8 +233,6 @@ public class Board {
 
 
     public static void main(String[] args) {
-        Board a = new Board();
-        a.drawBoard();
-        a.drawPieces();
+
     }
 }

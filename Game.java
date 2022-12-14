@@ -12,11 +12,11 @@ public class Game {
                                "For example, the square A1 is in the bottom left, and H8 in the top right.");
         StdOut.println("Player 1, type your name.");
         String p1 = StdIn.readString();
-        Player player1 = new Player(p1, true);
+        Player player1 = new Player(true);
         StdOut.println(p1 + ", you will be red.");
         StdOut.println("Player 2, type your name.");
         String p2 = StdIn.readString();
-        Player player2 = new Player(p2, false);
+        Player player2 = new Player(false);
         StdOut.println(p2 + ", you will be black.");
         gameboard.drawBoard();
         gameboard.drawPieces();
@@ -31,14 +31,6 @@ public class Game {
                     p1 + ", what square is the piece you want to move CURRENTLY on? ");
             StdOut.println(
                     "Please remember to use the associated number and letter of the square (e.g. e1)");
-            // Keyboard keyboard = new Keyboard();
-            // String keyboardString = "abcdefgh";
-            // while (true){
-            //     if (keyboard.hasNextKeyPlayed()){
-            //         char key = keyboard.nextKeyPlayed();
-            //         int z = keyboardString.indexOf(key);
-            //     }
-            // }
             String oldplace = StdIn.readString();
 
             // checks to make sure its a valid square
@@ -96,9 +88,9 @@ public class Game {
                                       gameboard);
             }
 
-            // if the piece can jump, forces it to jump
+            // if the piece can jump, asks if they want to jump again
             if (f) {
-                current.jump(oldRow, oldColumn, newRow, newColumn, current.getColor(), gameboard);
+                current.jump(oldRow, oldColumn, newRow, newColumn, gameboard);
                 gameboard.update(gameboard);
                 gameboard.drawBoard();
                 gameboard.drawPieces();
@@ -130,7 +122,7 @@ public class Game {
                                                                 current.getColor(),
                                                                 gameboard);
                         if (isValidJump) {
-                            current.jump(newRow, newColumn, newR, newC, current.getColor(),
+                            current.jump(newRow, newColumn, newR, newC,
                                          gameboard);
                         }
                         while (!isValidJump) {
@@ -243,7 +235,7 @@ public class Game {
 
             // if the piece can jump, forces it to jump
             if (ff) {
-                current2.jump(oldRow2, oldColumn2, newRow2, newColumn2, current2.getColor(),
+                current2.jump(oldRow2, oldColumn2, newRow2, newColumn2,
                               gameboard);
                 gameboard.update(gameboard);
                 gameboard.drawBoard();
@@ -276,7 +268,7 @@ public class Game {
                                                                   current2.getColor(),
                                                                   gameboard);
                         if (isValidJump2) {
-                            current2.jump(newRow2, newColumn2, newR2, newC2, current2.getColor(),
+                            current2.jump(newRow2, newColumn2, newR2, newC2,
                                           gameboard);
                         }
                         while (!isValidJump2) {
@@ -309,6 +301,7 @@ public class Game {
                     }
                 }
             }
+
             // if the piece can't jump, moves regularly
             else if (ee) {
                 current2.move(oldRow2, oldColumn2, newRow2, newColumn2, current2.getColor(),

@@ -1,23 +1,12 @@
 public class King extends Piece {
-    private int xvalue;
-    private int yvalue;
 
+    // King Constructor
     public King(boolean r, int row, int c) {
-        super(r);
-        xvalue = row;
-        yvalue = c;
+        super(r, row, c);
     }
 
-    public void move(int ir, int ic, int er, int ec, boolean r, Board a) {
-        if (id(ir, ic, er, ec, r)) {
-            Square c = a.getSquare(er, ec);
-            xvalue = c.getX();
-            yvalue = c.getY();
-            c.setPiece(this);
-            a.getSquare(ir, ic).leave();
-        }
-    }
-
+    // checks to make sure that the end row (er) and end column(ec) are
+    // diagonal from the king (but in any direction)
     public boolean id(int ir, int ic, int er, int ec, boolean r) {
         if (Math.abs(er - ir) == 1 && Math.abs(ec - ic) == 1) {
             return true;
@@ -25,6 +14,8 @@ public class King extends Piece {
         return false;
     }
 
+    // check to see if a move is a jump or not using user input of
+    // intital row, intial column, end row, end column, and color
     public boolean canItJump(int ir, int ic, int er, int ec, boolean r, Board a) {
         if (this.upLeft(ir, ic, er, ec)) {
             int irr = ir + 1;
@@ -67,42 +58,11 @@ public class King extends Piece {
         return false;
     }
 
-    public double getXvalue() {
-        return xvalue;
-    }
-
-    public double getYvalue() {
-        return yvalue;
-    }
-
+    // returns if this piece is a king or not
     public boolean isKing() {
         return true;
     }
 
-    public void jump(int ir, int ic, int er, int ec, boolean r, Board a) {
-        Square c = a.getSquare(er, ec);
-        xvalue = c.getX();
-        yvalue = c.getY();
-        c.setPiece(this);
-        a.getSquare(ir, ic).leave();
-        if (this.upLeft(ir, ic, er, ec)) {
-            Square d = a.getSquare(ir + 1, ic - 1);
-            d.leave();
-        }
-        else if (this.upRight(ir, ic, er, ec)) {
-            Square d = a.getSquare(ir + 1, ic + 1);
-            d.leave();
-        }
-        else if (this.downLeft(ir, ic, er, ec)) {
-            Square d = a.getSquare(ir - 1, ic - 1);
-            d.leave();
-        }
-        else {
-            Square d = a.getSquare(ir - 1, ic + 1);
-            d.leave();
-        }
-
-    }
 
     public static void main(String[] args) {
 
