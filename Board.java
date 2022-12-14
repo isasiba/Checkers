@@ -187,59 +187,81 @@ public class Board {
 
     // updates given Board if a piece makes it all the way
     // to the other side of the board and becomes a King
-    public static void update(Board a) {
-        if (!a.getSquare(0, 1).getPiece().getColor() &&
-                a.getSquare(0, 1).isOccupied()) {
-            a.getSquare(0, 1).leave();
+    public void update() {
+        if (!this.getSquare(0, 1).getPiece().getColor() &&
+                this.getSquare(0, 1).isOccupied()) {
+            this.getSquare(0, 1).leave();
             King temp = new King(false, 3, 1);
-            a.getSquare(0, 1).setPiece(temp);
+            this.getSquare(0, 1).setPiece(temp);
         }
-        else if (!a.getSquare(0, 3).getPiece().getColor() &&
-                a.getSquare(0, 3).isOccupied()) {
-            a.getSquare(0, 3).leave();
+        else if (!this.getSquare(0, 3).getPiece().getColor() &&
+                this.getSquare(0, 3).isOccupied()) {
+            this.getSquare(0, 3).leave();
             King temp = new King(false, 7, 1);
-            a.getSquare(0, 3).setPiece(temp);
+            this.getSquare(0, 3).setPiece(temp);
         }
-        else if (!a.getSquare(0, 5).getPiece().getColor() &&
-                a.getSquare(0, 5).isOccupied()) {
-            a.getSquare(0, 5).leave();
+        else if (!this.getSquare(0, 5).getPiece().getColor() &&
+                this.getSquare(0, 5).isOccupied()) {
+            this.getSquare(0, 5).leave();
             King temp = new King(false, 11, 1);
-            a.getSquare(0, 5).setPiece(temp);
+            this.getSquare(0, 5).setPiece(temp);
         }
-        else if (!a.getSquare(0, 7).getPiece().getColor() &&
-                a.getSquare(0, 7).isOccupied()) {
-            a.getSquare(0, 7).leave();
+        else if (!this.getSquare(0, 7).getPiece().getColor() &&
+                this.getSquare(0, 7).isOccupied()) {
+            this.getSquare(0, 7).leave();
             King temp = new King(false, 15, 1);
-            a.getSquare(0, 7).setPiece(temp);
+            this.getSquare(0, 7).setPiece(temp);
         }
-        else if (a.getSquare(7, 0).getPiece().getColor() &&
-                a.getSquare(7, 0).isOccupied()) {
-            a.getSquare(7, 0).leave();
+        else if (this.getSquare(7, 0).getPiece().getColor() &&
+                this.getSquare(7, 0).isOccupied()) {
+            this.getSquare(7, 0).leave();
             King temp = new King(true, 1, 15);
-            a.getSquare(7, 0).setPiece(temp);
+            this.getSquare(7, 0).setPiece(temp);
         }
-        else if (a.getSquare(7, 2).getPiece().getColor() &&
-                a.getSquare(7, 0).isOccupied()) {
-            a.getSquare(7, 2).leave();
+        else if (this.getSquare(7, 2).getPiece().getColor() &&
+                this.getSquare(7, 0).isOccupied()) {
+            this.getSquare(7, 2).leave();
             King temp = new King(true, 5, 15);
-            a.getSquare(7, 2).setPiece(temp);
+            this.getSquare(7, 2).setPiece(temp);
         }
-        else if (a.getSquare(7, 4).getPiece().getColor() &&
-                a.getSquare(7, 0).isOccupied()) {
-            a.getSquare(7, 4).leave();
+        else if (this.getSquare(7, 4).getPiece().getColor() &&
+                this.getSquare(7, 0).isOccupied()) {
+            this.getSquare(7, 4).leave();
             King temp = new King(true, 9, 15);
-            a.getSquare(7, 4).setPiece(temp);
+            this.getSquare(7, 4).setPiece(temp);
         }
-        else if (a.getSquare(7, 6).getPiece().getColor() &&
-                a.getSquare(7, 0).isOccupied()) {
-            a.getSquare(7, 6).leave();
+        else if (this.getSquare(7, 6).getPiece().getColor() &&
+                this.getSquare(7, 0).isOccupied()) {
+            this.getSquare(7, 6).leave();
             King temp = new King(true, 13, 15);
-            a.getSquare(7, 6).setPiece(temp);
+            this.getSquare(7, 6).setPiece(temp);
         }
     }
 
 
+    // We used main to test our methods
     public static void main(String[] args) {
+
+        // *CODE TO TEST FUNCTION 1 : OUR VISUAL REPRESENTATION OF THE GAME*
+        // testing our drawing and updating board method
+        Board test = new Board();
+        // tests to make sure that board is drawn correctly
+        test.drawBoard();
+        // tests to make sure that pieces are in correct initial position
+        test.drawPieces();
+        // the remainder of the test for this function continues in the "Game method"
+        // Our test cases that were most likely to fail were when a piece
+        // moved diagonally, or when a piece jumped another,
+        // (we had to make sure the captured piece disappeared)
+        // or when a piece became a king (the picture needed to change
+
+
+        StdOut.println(test.getSquare(0, 1));
+        StdOut.println(test.getPieceOnSquare(0, 1));
+        test.update();
+        test.canItMoveThereAfter("b3");
+        test.canItMoveThereIntially("b3", new Player(true));
+
 
     }
 }

@@ -134,7 +134,7 @@ public abstract class Piece {
 
     // returns if the piece belongs to King class or not
     public abstract boolean isKing();
-
+    
     public static void main(String[] args) {
 
     }

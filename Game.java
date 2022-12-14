@@ -94,7 +94,7 @@ public class Game {
             // if the piece can jump, asks if they want to jump again
             if (f) {
                 current.jump(oldRow, oldColumn, newRow, newColumn, gameboard);
-                gameboard.update(gameboard);
+                gameboard.update();
                 gameboard.drawBoard();
                 gameboard.drawPieces();
                 String answer = "y";
@@ -151,7 +151,7 @@ public class Game {
                         }
                         newRow = newR;
                         newColumn = newC;
-                        gameboard.update(gameboard);
+                        gameboard.update();
                         gameboard.drawBoard();
                         gameboard.drawPieces();
                     }
@@ -163,7 +163,7 @@ public class Game {
             }
 
             // updates drawing
-            gameboard.update(gameboard);
+            gameboard.update();
             gameboard.drawBoard();
             gameboard.drawPieces();
 
@@ -240,7 +240,7 @@ public class Game {
             if (ff) {
                 current2.jump(oldRow2, oldColumn2, newRow2, newColumn2,
                               gameboard);
-                gameboard.update(gameboard);
+                gameboard.update();
                 gameboard.drawBoard();
                 gameboard.drawPieces();
                 String answer2 = "y";
@@ -298,7 +298,7 @@ public class Game {
                         }
                         newRow2 = newR2;
                         newColumn2 = newC2;
-                        gameboard.update(gameboard);
+                        gameboard.update();
                         gameboard.drawBoard();
                         gameboard.drawPieces();
                     }
@@ -312,7 +312,7 @@ public class Game {
             }
 
             // updates drawing
-            gameboard.update(gameboard);
+            gameboard.update();
             gameboard.drawBoard();
             gameboard.drawPieces();
 

@@ -68,8 +68,47 @@ public class King extends Piece {
         return true;
     }
 
-
+    // used main to test methods
     public static void main(String[] args) {
 
+        // * TEST CODE FOR FUNCTION #2: INHERITANCE *
+
+        // We want to make sure that the King class inherits the
+        // properties of the Piece Class so that's what we'll test first
+        King a = new King(true, 1, 1);
+        StdOut.println(a.getColor());
+        StdOut.println(a.getxValue());
+        StdOut.println(a.getyValue());
+        a.setxValue(2);
+        a.setyValue(23);
+        StdOut.println(a.getxValue());
+        StdOut.println(a.getyValue());
+        StdOut.println(a.upRight(1, 1, 2, 23));
+        StdOut.println(a.upRight(5, 1, 2, 23));
+        StdOut.println(a.upLeft(1, 1, 0, 23));
+        StdOut.println(a.upLeft(5, 1, 2, 23));
+        StdOut.println(a.downLeft(10, 12, 2, 2));
+        StdOut.println(a.downLeft(5, 1, 2, 23));
+        StdOut.println(a.downRight(10, 12, 2, 2));
+        StdOut.println(a.downRight(5, 1, 2, 23));
+        // to save time, we tested the other two non-abstract methods in the
+        // piece class (move and jump) in the game class using command line
+        // arguments and the cases we tested were:
+        // to make sure that they didn't fail were moving out of bounds, to places
+        // a king shouldn't be able to move, moving multiple pieces to the same
+        // square, and then checking that when jumped, the square of the piece
+        // captured was empty
+
+        // Now, we can test the abstract methods
+        StdOut.println(a.isKing());
+        StdOut.println(a.id(0, 1, 0, 2, a.getColor()));
+        StdOut.println(a.id(0, 1, 5, 7, a.getColor()));
+
+        // we also tested canItJump in the game class by calling jumps
+        // close to the edge of the board, jumping backwards and forwards,
+        // jumping over your own pieces, etc.
+
+
     }
+
 }
