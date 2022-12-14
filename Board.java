@@ -1,5 +1,8 @@
 import java.awt.Color;
 
+// The board class uses an array of square objects to mimic a chessboard,
+// with each individual square in the array being assigned specific properties
+// like color or pieces which help allow for gameplay
 public class Board {
     // creates an array of squares that will serve as the "board"
     private Square[][] mainboard;
@@ -125,7 +128,9 @@ public class Board {
         }
     }
 
-    // checks to make sure that user input for piece they want to move is valid
+    // checks to make sure that user input (taken in as string) for the
+    // piece they want to move is valid, also takes in which player is moving
+    // to make sure they're not trying to move opponent's piece. This method also
     // checks to see if its a valid square on board, if there's a piece on the square,
     // and if the piece is one of the player's pieces
     public boolean canItMoveThereIntially(String s, Player p) {
@@ -148,8 +153,9 @@ public class Board {
         return true;
     }
 
-    // checks to make sure that the destination user inputed is valid
-    // check to make sure its a row/col located within bounds of array,
+    // checks to make sure that the destination (string taken in)
+    // user inputs is valid while also
+    // checking to make sure its a row/col located within bounds of array,
     // a black square, and its unoccupied
     public boolean canItMoveThereAfter(String s) {
         if (s.length() != 2) {
@@ -173,13 +179,14 @@ public class Board {
         return true;
     }
 
-    // returns piece belonging to specified square
+    // returns piece belonging to specified square based off of
+    // specified row (x) and column (y)
     public Piece getPieceOnSquare(int x, int y) {
         return mainboard[x][y].getPiece();
     }
 
-    // updates Board if a piece makes it all the way to the other side
-    // of the board and become a King
+    // updates given Board if a piece makes it all the way
+    // to the other side of the board and becomes a King
     public static void update(Board a) {
         if (!a.getSquare(0, 1).getPiece().getColor() &&
                 a.getSquare(0, 1).isOccupied()) {

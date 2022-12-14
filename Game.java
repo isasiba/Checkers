@@ -1,3 +1,6 @@
+// The Game class is where the actual game is played. It's the class
+// that ties all of the other classes together to create the fun game
+// of checkers!
 public class Game {
 
 

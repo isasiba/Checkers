@@ -1,3 +1,5 @@
+// The Square class creates a Square object that can then be assigned
+// various properties like color or pieces which are then used to play
 public class Square {
     // returns if the square has a piece on it
     private boolean occupied;
@@ -10,7 +12,7 @@ public class Square {
     // returns y value of square (where image is centered)
     private int y;
 
-    // creates empty Square
+    // creates empty Square with specified color and position
     public Square(boolean isred, int xx, int yy) {
         occupied = false;
         red = isred;
@@ -18,9 +20,9 @@ public class Square {
         y = yy;
     }
 
-    // creates Square with Piece (which it takes in as a paramter)
+    // creates Square with Piece, color, and position (which are taken in)
     public Square(Piece p, boolean isred, int xx, int yy) {
-        this.a = p;
+        a = p;
         red = isred;
         occupied = true;
         x = xx;
@@ -34,7 +36,7 @@ public class Square {
 
     // returns piece on square
     public Piece getPiece() {
-        return this.a;
+        return a;
     }
 
     // returns color of square
@@ -52,7 +54,7 @@ public class Square {
         return y;
     }
 
-    // assigns a new piece to Square
+    // assigns piece taken in to Square
     public void setPiece(Piece p) {
         a = p;
         occupied = true;

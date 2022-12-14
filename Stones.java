@@ -1,12 +1,15 @@
+// The Stones class is a child of the Piece class and represents a checker piece
+// that has yet to become kinged. These pieces are known as "stones", hence the class name
 public class Stones extends Piece {
 
-    // creates new Stone (piece thats not a king)
+    // creates new Stone with given color and position
     public Stones(boolean red, int x, int y) {
         super(red, x, y);
     }
 
 
-    // checks to see if the stone is jumping
+    // checks to see if the stone is jumping based off of initial and end location,
+    // color, and the gameboard the game is currently being played on
     public boolean canItJump(int ir, int ic, int er, int ec, boolean r, Board a) {
         if (this.upLeft(ir, ic, er, ec) && r) {
             int irr = ir + 1;
@@ -50,8 +53,9 @@ public class Stones extends Piece {
     }
 
     // checks to see if the piece is moving diagonally in a valid direction
+    // using initial and end positions
     // for example, red stones can only move up
-    // and black stones can only move down the board 
+    // and black stones can only move down the board
     public boolean id(int ir, int ic, int er, int ec, boolean r) {
         if (r) {
             if (er - ir == 1 && Math.abs(ec - ic) == 1) {

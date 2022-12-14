@@ -1,3 +1,6 @@
+// Creates the Piece Class, which is the Parent Class to the "Stones"
+// and "King" classes. This class is abstract because the implementations
+// of some methods differ between the Stones and King classes
 public abstract class Piece {
     // saves color of piece
     private boolean isred;
@@ -6,7 +9,7 @@ public abstract class Piece {
     // saves y value of piece (so we know where to display piece)
     private int yValue;
 
-    // creates new Piece Object
+    // creates new Piece Object by assigning it a color, x, and y value
     public Piece(boolean color, int x, int y) {
         isred = color;
         xValue = x;
@@ -18,7 +21,8 @@ public abstract class Piece {
         return isred;
     }
 
-    // returns if the piece is moving up and to the right
+    // returns if the piece is moving up and to the right by looking
+    // at the initial row, initial column, end row, and end column
     public boolean upRight(int ir, int ic, int er, int ec) {
         if (er > ir && ec > ic) {
             return true;
@@ -26,7 +30,8 @@ public abstract class Piece {
         return false;
     }
 
-    // returns if the piece is moving up and to the left
+    // returns if the piece is moving up and to the left by looking
+    // at the initial row, initial column, end row, and end column
     public boolean upLeft(int ir, int ic, int er, int ec) {
         if (er > ir && ic > ec) {
             return true;
@@ -34,7 +39,8 @@ public abstract class Piece {
         return false;
     }
 
-    // returns if the piece is moving down and to the left
+    // returns if the piece is moving down and to the left by looking
+    // at the initial row, initial column, end row, and end column
     public boolean downLeft(int ir, int ic, int er, int ec) {
         if (er < ir && ec < ic) {
             return true;
@@ -42,7 +48,8 @@ public abstract class Piece {
         return false;
     }
 
-    // returns if the piece is moving down and to the right
+    // returns if the piece is moving down and to the right by looking
+    // at the initial row, initial column, end row, and end column
     public boolean downRight(int ir, int ic, int er, int ec) {
         if (er < ir && ec > ic) {
             return true;
@@ -60,17 +67,22 @@ public abstract class Piece {
         return yValue;
     }
 
-    // updates x value
+    // updates x value to int taken in
     public void setxValue(int x) {
         xValue = x;
     }
 
-    // updates y value
+    // updates y value to int taken in
     public void setyValue(int y) {
         yValue = y;
     }
 
     // moves piece by assigning it to a new square and "leaving" the old square
+    // this happens by first checking that its a valid diagonal move
+    // then the current piece is assigned to the new square and "leaves"
+    // the old square. This is all accomplished by using  the initial row,
+    // initial column, end row, end column, color (to check its moving in right direction),
+    // and the board the game is being played on
     public void move(int ir, int ic, int er, int ec, boolean r, Board a) {
         if (id(ir, ic, er, ec, r)) {
             Square c = a.getSquare(er, ec);
@@ -83,6 +95,9 @@ public abstract class Piece {
 
     // allows a piece to jump by moving the piece (see above) and then also
     // having the piece that was "jumped over" leave its current square
+    // This is all accomplished by using the initial row,
+    // initial column, end row, end column, color (to check its moving in right direction),
+    // and the board the game is being played on
     public void jump(int ir, int ic, int er, int ec, Board a) {
         Square c = a.getSquare(er, ec);
         this.setxValue(c.getX());
@@ -107,10 +122,14 @@ public abstract class Piece {
         }
     }
 
-    // checks to see if a move is a jump
+    // checks to see if a move is a jump using the initial row,
+    // initial column, end row, end column, color (to check its moving in right direction),
+    // and the board the game is being played on
     public abstract boolean canItJump(int ir, int ic, int er, int ec, boolean r, Board a);
 
-    // checks to see if the piece is moving diagonally
+    // checks to see if the piece is moving diagonally using the initial row,
+    // initial column, end row, end column, color (to check its moving in right direction),
+    // and the board the game is being played on
     public abstract boolean id(int ir, int ic, int er, int ec, boolean r);
 
     // returns if the piece belongs to King class or not

@@ -1,8 +1,11 @@
+// The player class creates a new player which is useful for assigning turns,
+// making sure that theyy aren't manipulating opponets pieces (or capturing
+// their own), and declaring the game over
 public class Player {
     // saves color of player
     private boolean isRed;
 
-    // Player Constructor
+    // Player Constructor takes in color
     public Player(boolean r) {
         isRed = r;
     }
@@ -13,7 +16,7 @@ public class Player {
     }
 
     // determines if the game is over by checking to see if there are any
-    // possible moves any piece can make
+    // possible moves any piece can make on the specified game board
     public boolean gameOverStones(Board a) {
         boolean go = true;
         for (int i = 0; i < 8; i++) { // rows
