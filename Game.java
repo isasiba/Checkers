@@ -99,6 +99,68 @@ public class Game {
             // if the piece can jump, forces it to jump
             if (f) {
                 current.jump(oldRow, oldColumn, newRow, newColumn, current.getColor(), gameboard);
+                gameboard.update(gameboard);
+                gameboard.drawBoard();
+                gameboard.drawPieces();
+                String answer = "y";
+                boolean stay = true;
+                while (answer.equals("y") && stay) {
+                    StdOut.println(
+                            "If there's a possible jump, you can move again. Would you like to do so? "
+                                    + "Press y for yes, n for no.");
+                    answer = StdIn.readString().toLowerCase();
+                    if (answer.equals("y")) {
+                        System.out.println(
+                                p1 + ", what square would you like to move your piece to?");
+                        String newDestination = StdIn.readString();
+
+                        // checks to make sure destination is a valid square
+                        boolean v = gameboard.canItMoveThereAfter(newDestination);
+                        while (!v) {
+                            System.out.println("Not a valid square. Please try again.");
+                            String plea = StdIn.readString();
+                            newDestination = plea;
+                            v = gameboard.canItMoveThereAfter(plea);
+                        }
+                        int newC = newDestination.charAt(0) - 'a';
+                        int newR = Integer.parseInt(newDestination.substring(1, 2)) - 1;
+
+                        // make sure that its a valid jump
+                        boolean isValidJump = current.canItJump(newRow, newColumn, newR, newC,
+                                                                current.getColor(),
+                                                                gameboard);
+                        if (isValidJump) {
+                            current.jump(newRow, newColumn, newR, newC, current.getColor(),
+                                         gameboard);
+                        }
+                        while (!isValidJump) {
+                            StdOut.println("Not a valid move. Pick a new destination. "
+                                                   + "Or type q to end your turn.");
+                            String pl = StdIn.readString();
+                            if (pl.toLowerCase().equals("q")) {
+                                stay = false;
+                                break;
+                            }
+                            boolean canIt = gameboard.canItMoveThereAfter(pl);
+                            while (!canIt) {
+                                System.out.println("Not a valid square. Please try again.");
+                                String plea = StdIn.readString();
+                                pl = plea;
+                                canIt = gameboard.canItMoveThereAfter(plea);
+                            }
+                            newColumn = pl.charAt(0) - 'a';
+                            newRow = Integer.parseInt(pl.substring(1, 2)) - 1;
+                            isValidJump = current.canItJump(oldRow, oldColumn, newRow, newColumn,
+                                                            current.getColor(),
+                                                            gameboard);
+                        }
+                        newRow = newR;
+                        newColumn = newC;
+                        gameboard.update(gameboard);
+                        gameboard.drawBoard();
+                        gameboard.drawPieces();
+                    }
+                }
             }
             // if the piece can't jump, moves regularly
             else if (e) {
@@ -109,46 +171,6 @@ public class Game {
             gameboard.update(gameboard);
             gameboard.drawBoard();
             gameboard.drawPieces();
-
-            StdOut.println(
-                    "If there's a possible jump, you can move again. Would you like to do so? "
-                            + "Press y for yes, n for no.");
-            String answer = StdIn.readString().toLowerCase();
-
-            // fix print statements
-            while (answer.equals("y")) {
-                StdOut.println(
-                        "If there's a possible jump, you can move again. Would you like to do so? "
-                                + "Press y for yes, n for no.");
-                answer = StdIn.readString().toLowerCase();
-                if (answer.equals("y")) {
-                    System.out.println(
-                            p1 + ", what square would you like to move your piece to?");
-                    String newDestination = StdIn.readString();
-
-                    // checks to make sure destination is a valid square
-                    boolean v = gameboard.canItMoveThereAfter(newDestination);
-                    while (!v) {
-                        System.out.println("Not a valid square. Please try again.");
-                        String plea = StdIn.readString();
-                        newDestination = plea;
-                        v = gameboard.canItMoveThereAfter(plea);
-                    }
-                    int newC = newDestination.charAt(0) - 'a';
-                    int newR = Integer.parseInt(newDestination.substring(1, 2)) - 1;
-
-                    // make sure that its a valid jump
-                    boolean isValidJump = current.canItJump(newRow, newColumn, newR, newC,
-                                                            current.getColor(),
-                                                            gameboard);
-                    if (isValidJump) {
-                        current.jump(newRow, newColumn, newR, newC, current.getColor(), gameboard);
-                    }
-                    newRow = newR;
-                    newColumn = newC;
-
-                }
-            }
 
 
             // checks to make sure game isn't over
@@ -223,6 +245,69 @@ public class Game {
             if (ff) {
                 current2.jump(oldRow2, oldColumn2, newRow2, newColumn2, current2.getColor(),
                               gameboard);
+                gameboard.update(gameboard);
+                gameboard.drawBoard();
+                gameboard.drawPieces();
+                String answer2 = "y";
+                boolean stay2 = true;
+                while (answer2.equals("y") && stay2) {
+                    StdOut.println(
+                            "If there's a possible jump, you can move again. Would you like to do so? "
+                                    + "Press y for yes, n for no.");
+                    answer2 = StdIn.readString().toLowerCase();
+                    if (answer2.equals("y")) {
+                        System.out.println(
+                                p2 + ", what square would you like to move your piece to?");
+                        String newDestination2 = StdIn.readString();
+
+                        // checks to make sure destination is a valid square
+                        boolean v2 = gameboard.canItMoveThereAfter(newDestination2);
+                        while (!v2) {
+                            System.out.println("Not a valid square. Please try again.");
+                            String plea = StdIn.readString();
+                            newDestination2 = plea;
+                            v2 = gameboard.canItMoveThereAfter(plea);
+                        }
+                        int newC2 = newDestination2.charAt(0) - 'a';
+                        int newR2 = Integer.parseInt(newDestination2.substring(1, 2)) - 1;
+
+                        // make sure that its a valid jump
+                        boolean isValidJump2 = current2.canItJump(newRow2, newColumn2, newR2, newC2,
+                                                                  current2.getColor(),
+                                                                  gameboard);
+                        if (isValidJump2) {
+                            current2.jump(newRow2, newColumn2, newR2, newC2, current2.getColor(),
+                                          gameboard);
+                        }
+                        while (!isValidJump2) {
+                            StdOut.println(
+                                    "Not a valid move. Pick a new destination. Or type q to end move.");
+                            String pl2 = StdIn.readString();
+                            if (pl2.toLowerCase().equals("q")) {
+                                stay2 = false;
+                                break;
+                            }
+                            boolean canIt2 = gameboard.canItMoveThereAfter(pl2);
+                            while (!canIt2) {
+                                System.out.println("Not a valid square. Please try again.");
+                                String plea2 = StdIn.readString();
+                                pl2 = plea2;
+                                canIt2 = gameboard.canItMoveThereAfter(plea2);
+                            }
+                            newColumn2 = pl2.charAt(0) - 'a';
+                            newRow2 = Integer.parseInt(pl2.substring(1, 2)) - 1;
+                            isValidJump2 = current2.canItJump(oldRow2, oldColumn2, newRow2,
+                                                              newColumn2,
+                                                              current2.getColor(),
+                                                              gameboard);
+                        }
+                        newRow2 = newR2;
+                        newColumn2 = newC2;
+                        gameboard.update(gameboard);
+                        gameboard.drawBoard();
+                        gameboard.drawPieces();
+                    }
+                }
             }
             // if the piece can't jump, moves regularly
             else if (ee) {
@@ -235,55 +320,13 @@ public class Game {
             gameboard.drawBoard();
             gameboard.drawPieces();
 
-            StdOut.println(
-                    "If there's a possible jump, you can move again. Would you like to do so? "
-                            + "Press y for yes, n for no.");
-            String answer2 = StdIn.readString().toLowerCase();
-            while (answer2.equals("y")) {
-                StdOut.println(
-                        "If there's a possible jump, you can move again. Would you like to do so? "
-                                + "Press y for yes, n for no.");
-                answer2 = StdIn.readString().toLowerCase();
-                if (answer2.equals("y")) {
-                    System.out.println(
-                            p2 + ", what square would you like to move your piece to?");
-                    String newDestination2 = StdIn.readString();
-
-                    // checks to make sure destination is a valid square
-                    boolean v2 = gameboard.canItMoveThereAfter(newDestination2);
-                    while (!v2) {
-                        System.out.println("Not a valid square. Please try again.");
-                        String plea = StdIn.readString();
-                        newDestination2 = plea;
-                        v2 = gameboard.canItMoveThereAfter(plea);
-                    }
-                    int newC2 = newDestination2.charAt(0) - 'a';
-                    int newR2 = Integer.parseInt(newDestination2.substring(1, 2)) - 1;
-
-                    // make sure that its a valid jump
-                    boolean isValidJump2 = current2.canItJump(newRow2, newColumn2, newR2, newC2,
-                                                              current2.getColor(),
-                                                              gameboard);
-                    if (isValidJump2) {
-                        current2.jump(newRow2, newColumn2, newR2, newC2, current2.getColor(),
-                                      gameboard);
-                    }
-                    newRow2 = newR2;
-                    newColumn2 = newC2;
-
-                }
-            }
-
-
             // checks to make sure game isn't over
             if (player2.gameOverStones(gameboard)) {
                 break;
             }
 
             StdOut.println("That's the end of this round!");
-            StdOut.println(gameboard.getSquare(3, 6).isOccupied());
         }
-        StdOut.println("Game Over");
         StdOut.println("GAME OVER!");
         if (player1.gameOverStones(gameboard)) {
             StdOut.println("Congratulations " + p1 + " on your win.");
@@ -292,12 +335,10 @@ public class Game {
             StdOut.println("Congratulations " + p2 + " on your win.");
         }
         StdOut.println("Thanks for playing! See you again later!");
+
     }
-
-
-    // boolean f = current.canItJump(oldRow, oldColumn, newRow, newColumn, current.getColor(),
-    // gameboard);
-    // StdOut.println(f);
-
-
 }
+
+
+
+

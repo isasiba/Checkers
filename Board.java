@@ -153,6 +153,7 @@ public class Board {
         if (isPiece) {
             return false;
         }
+        
         return true;
     }
 
@@ -209,7 +210,7 @@ public class Board {
             a.getSquare(7, 6).setPiece(temp);
         }
     }
-    
+
 
     public static void main(String[] args) {
         Board a = new Board();
