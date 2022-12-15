@@ -8,11 +8,14 @@ public class Game {
 
         //*INTRODUCTION*//
         Board gameboard = new Board();
-        StdOut.println("Welcome to Checkers!");
+        StdOut.println("Welcome to Checkers! Here are the rules:");
         StdOut.println("You will move your piece using square notation. "
                                + "Columns are lettered A-H with A in the bottom left corner. "
                                + "Rows are lettered 1-8 with 1 in the bottom left corner. " +
                                "For example, the square A1 is in the bottom left, and H8 in the top right.");
+        StdOut.println(
+                "A player wins by capturing all of their opponets pieces. If only one piece remains"
+                        + "but it is cornered and unable to move, type 'c' to concede.");
         StdOut.println("Player 1, type your name.");
         String p1 = StdIn.readString();
         Player player1 = new Player(true);
@@ -97,6 +100,7 @@ public class Game {
                 gameboard.update();
                 gameboard.drawBoard();
                 gameboard.drawPieces();
+
                 String answer = "y";
                 boolean stay = true;
                 while (answer.equals("y") && stay) {
@@ -127,6 +131,7 @@ public class Game {
                         if (isValidJump) {
                             current.jump(newRow, newColumn, newR, newC,
                                          gameboard);
+                            current = gameboard.getPieceOnSquare(newRow, newColumn);
                         }
                         while (!isValidJump) {
                             StdOut.println("Not a valid move. Pick a new destination. "
@@ -169,9 +174,19 @@ public class Game {
 
 
             // checks to make sure game isn't over
-            if (!player1.gameOverStones(gameboard)) {
+            if (!player1.gameOver(gameboard) || !player2.gameOver(gameboard)) {
                 break;
             }
+
+            // if (newRow == 7 && current.getColor()) {
+            //     StdOut.println(current.availableMove(newRow, newColumn,
+            //                                          current.getColor(), gameboard));
+            //     StdOut.println(current.availableJump(newRow, newColumn,
+            //                                          current.getColor(), gameboard));
+            //     if (!current.isKing()) {
+            //         StdOut.println("Red Stone");
+            //     }
+            // }
 
             // PLAYER 2 TURN//
             StdOut.print(
@@ -273,6 +288,7 @@ public class Game {
                         if (isValidJump2) {
                             current2.jump(newRow2, newColumn2, newR2, newC2,
                                           gameboard);
+                            current2 = gameboard.getPieceOnSquare(newRow2, newColumn2);
                         }
                         while (!isValidJump2) {
                             StdOut.println(
@@ -317,14 +333,21 @@ public class Game {
             gameboard.drawPieces();
 
             // checks to make sure game isn't over
-            if (!player2.gameOverStones(gameboard)) {
+            if (!player2.gameOver(gameboard) || !player1.gameOver(gameboard)) {
                 break;
             }
 
             StdOut.println("That's the end of this round!");
+            // if (newRow2 == 0 && !current2.getColor()) {
+            //     StdOut.println(current2.availableMove(newRow2, newColumn2,
+            //                                           current2.getColor(), gameboard));
+            //     StdOut.println(current2.availableJump(newRow2, newColumn2,
+            //                                           current2.getColor(), gameboard));
+            // }
+
         }
         StdOut.println("GAME OVER!");
-        if (player1.gameOverStones(gameboard)) {
+        if (player1.gameOver(gameboard)) {
             StdOut.println("Congratulations " + p1 + " on your win.");
         }
         else {

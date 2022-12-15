@@ -4,6 +4,8 @@
 public class Player {
     // saves color of player
     private boolean isRed;
+    // keeps track of captured pieces
+    private int capturedPieces;
 
     // Player Constructor takes in color
     public Player(boolean r) {
@@ -15,18 +17,20 @@ public class Player {
         return isRed;
     }
 
+    // declares if game is over
+
     // determines if the game is over by checking to see if there are any
     // possible moves any piece can make on the specified game board
-    public boolean gameOverStones(Board a) {
+    public boolean gameOver(Board a) {
         boolean go = false;
-        boolean r = this.getColor();
         for (int i = 0; i < 8; i++) { // rows
             for (int j = 0; j < 8; j++) { // columns
-                if (!a.getSquare(i, j).getColor() && a.getSquare(i, j).isOccupied()) {
-                    if (a.getPieceOnSquare(i, j).getColor() == this.getColor()) {
-                        Piece temp = a.getPieceOnSquare(i, j);
-                        if (temp.availableMove(i, j, r, a)
-                                || temp.availableJump(i, j, r, a)) {
+                Square s = a.getSquare(i, j);
+                if (!s.getColor() && s.isOccupied()) {
+                    if (s.getPiece().getColor() == this.getColor()) {
+                        Piece temp = s.getPiece();
+                        if (s.availableMove(temp, i, j, temp.getColor(), a)
+                                || s.availableJump(temp, i, j, temp.getColor(), a)) {
                             go = true;
                             break;
                         }

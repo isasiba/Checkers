@@ -3,7 +3,7 @@
 // of some methods differ between the Stones and King classes
 public abstract class Piece {
     // saves color of piece
-    private boolean isred;
+    private boolean isRed;
     // saves x value of piece (so we know where to display piece)
     private int xValue;
     // saves y value of piece (so we know where to display piece)
@@ -11,14 +11,14 @@ public abstract class Piece {
 
     // creates new Piece Object by assigning it a color, x, and y value
     public Piece(boolean color, int x, int y) {
-        isred = color;
+        isRed = color;
         xValue = x;
         yValue = y;
     }
 
     // returns color of piece
     public boolean getColor() {
-        return isred;
+        return isRed;
     }
 
     // returns if the piece is moving up and to the right by looking
@@ -121,199 +121,6 @@ public abstract class Piece {
             Square d = a.getSquare(ir - 1, ic + 1);
             d.leave();
         }
-    }
-
-    // determines if the game is over by checking to see if there are any
-    // possible moves a specified piece can make on the specified game board
-    public boolean availableMove(int ir, int ic, boolean color, Board a) {
-        // red stone
-        if (color && !this.isKing()) {
-            if (ic == 0) {
-                if (!a.getSquare(ir + 1, ic + 1).isOccupied()) {
-                    return true;
-                }
-            }
-            else if (ic == 7) {
-                if (!a.getSquare(ir + 1, ic - 1).isOccupied()) {
-                    return true;
-                }
-            }
-            else {
-                if (!a.getSquare(ir + 1, ic - 1).isOccupied() ||
-                        !a.getSquare(ir + 1, ic + 1).isOccupied()) {
-                    return true;
-                }
-            }
-        }
-
-        // black stone
-        else if (!color && !this.isKing()) {
-            if (ic == 0) {
-                if (!a.getSquare(ir - 1, ic + 1).isOccupied()) {
-                    return true;
-                }
-            }
-            else if (ic == 7) {
-                if (!a.getSquare(ir - 1, ic - 1).isOccupied()) {
-                    return true;
-                }
-            }
-            else {
-                if (!a.getSquare(ir - 1, ic - 1).isOccupied() ||
-                        !a.getSquare(ir - 1, ic + 1).isOccupied()) {
-                    return true;
-                }
-            }
-        }
-
-        // king
-        else {
-            if (ic == 0) {
-                if (!a.getSquare(ir + 1, ic + 1).isOccupied() ||
-                        !a.getSquare(ir - 1, ic + 1).isOccupied()) {
-                    return true;
-                }
-            }
-            else if (ic == 7) {
-                if (!a.getSquare(ir + 1, ic - 1).isOccupied() ||
-                        !a.getSquare(ir - 1, ic - 1).isOccupied()) {
-                    return true;
-                }
-            }
-            else if (ir == 0) {
-                if (!a.getSquare(ir + 1, ic - 1).isOccupied() ||
-                        !a.getSquare(ir + 1, ic + 1).isOccupied()) {
-                    return true;
-                }
-            }
-            else if (ir == 7) {
-                if (!a.getSquare(ir - 1, ic - 1).isOccupied() ||
-                        !a.getSquare(ir - 1, ic + 1).isOccupied()) {
-                    return true;
-                }
-            }
-            else {
-                if (!a.getSquare(ir + 1, ic - 1).isOccupied() ||
-                        !a.getSquare(ir + 1, ic + 1).isOccupied()
-                        || !a.getSquare(ir - 1, ic - 1).isOccupied()
-                        || !a.getSquare(ir - 1, ic + 1).isOccupied()) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    // determines if the game is over by checking to see if there are any
-    // possible moves a specified piece can make on the specified game board
-    public boolean availableJump(int ir, int ic, boolean color, Board a) {
-        // red stone
-        if (color && !this.isKing()) {
-            if (ir == 6) {
-                return false;
-            }
-            else if (ic == 0 || ic == 1) {
-                if (this.canItJump(ir, ic, ir + 2, ic + 2, color, a)) {
-                    return true;
-                }
-            }
-            else if (ic == 7 || ic == 6) {
-                if (this.canItJump(ir, ic, ir + 2, ic - 2, color, a)) {
-                    return true;
-                }
-            }
-            else {
-                if (this.canItJump(ir, ic, ir + 2, ic + 2, color, a) ||
-                        this.canItJump(ir, ic, ir + 2, ic - 2, color, a)) {
-                    return true;
-                }
-            }
-        }
-
-        // black stone
-        else if (!color && !this.isKing()) {
-            if (ir == 1) {
-                return false;
-            }
-            else if (ic == 0 || ic == 1) {
-                if (this.canItJump(ir, ic, ir - 2, ic + 2, color, a)) {
-                    return true;
-                }
-            }
-            else if (ic == 7 || ic == 6) {
-                if (this.canItJump(ir, ic, ir - 2, ic - 2, color, a)) {
-                    return true;
-                }
-            }
-            else {
-                if (this.canItJump(ir, ic, ir - 2, ic + 2, color, a) ||
-                        this.canItJump(ir, ic, ir - 2, ic - 2, color, a)) {
-                    return true;
-                }
-            }
-        }
-
-        // kings
-        else {
-            if ((ir == 0 && ic == 1) || (ir == 1 && ic == 0)) {
-                if (this.canItJump(ir, ic, ir + 2, ic + 2, color, a)) {
-                    return true;
-                }
-            }
-            else if ((ir == 0 && ic == 7) || (ir == 1 && ic == 6)) {
-                if (this.canItJump(ir, ic, ir + 2, ic - 2, color, a)) {
-                    return true;
-                }
-            }
-            else if ((ir == 6 && ic == 1) || (ir == 7 && ic == 0)) {
-                if (this.canItJump(ir, ic, ir - 2, ic + 2, color, a)) {
-                    return true;
-                }
-            }
-            else if ((ir == 6 && ic == 7) || (ir == 7 && ic == 6)) {
-                if (this.canItJump(ir, ic, ir - 2, ic - 2, color, a)) {
-                    return true;
-                }
-            }
-            else if ((ir == 0 && (ic == 3 || ic == 5))
-                    || (ir == 1 && (ic == 2 || ic == 4))) {
-                if (this.canItJump(ir, ic, ir + 2, ic - 2, color, a)
-                        || this.canItJump(ir, ic, ir + 2, ic + 2, color, a)) {
-                    return true;
-                }
-            }
-            else if ((ic == 0 && (ir == 3 || ir == 5))
-                    || (ic == 1 && (ir == 2 || ir == 4))) {
-                if (this.canItJump(ir, ic, ir + 2, ic + 2, color, a)
-                        || this.canItJump(ir, ic, ir - 2, ic + 2, color, a)) {
-                    return true;
-                }
-            }
-            else if ((ic == 6 && (ir == 3 || ir == 5))
-                    || (ic == 7 && (ir == 2 || ir == 4))) {
-                if (this.canItJump(ir, ic, ir + 2, ic - 2, color, a)
-                        || this.canItJump(ir, ic, ir - 2, ic - 2, color, a)) {
-                    return true;
-                }
-            }
-            else if ((ir == 6 && (ic == 3 || ic == 5))
-                    || (ir == 7 && (ic == 2 || ic == 4))) {
-                if (this.canItJump(ir, ic, ir - 2, ic + 2, color, a)
-                        || this.canItJump(ir, ic, ir - 2, ic - 2, color, a)) {
-                    return true;
-                }
-            }
-            else {
-                if (this.canItJump(ir, ic, ir - 2, ic + 2, color, a)
-                        || this.canItJump(ir, ic, ir - 2, ic - 2, color, a)
-                        || this.canItJump(ir, ic, ir + 2, ic - 2, color, a)
-                        || this.canItJump(ir, ic, ir + 2, ic + 2, color, a)) {
-                    return true;
-                }
-            }
-
-        }
-        return false;
     }
 
     // checks to see if a move is a jump using the initial row,
