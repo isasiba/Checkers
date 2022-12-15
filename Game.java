@@ -169,7 +169,7 @@ public class Game {
 
 
             // checks to make sure game isn't over
-            if (player1.gameOverStones(gameboard)) {
+            if (!player1.gameOverStones(gameboard)) {
                 break;
             }
 
@@ -317,7 +317,7 @@ public class Game {
             gameboard.drawPieces();
 
             // checks to make sure game isn't over
-            if (player2.gameOverStones(gameboard)) {
+            if (!player2.gameOverStones(gameboard)) {
                 break;
             }
 
