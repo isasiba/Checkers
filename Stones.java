@@ -1,14 +1,10 @@
 // The Stones class is a child of the Piece class and represents a checker piece
 // that has yet to become kinged. These pieces are known as "stones", hence the class name
 public class Stones extends Piece {
-    private int xx;
-    private int yy;
 
     // creates new Stone with given color and position
     public Stones(boolean red, int x, int y) {
         super(red, x, y);
-        xx = x;
-        yy = y;
     }
 
 

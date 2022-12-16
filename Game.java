@@ -2,8 +2,7 @@
 // that ties all of the other classes together to create the fun game
 // of checkers!
 public class Game {
-
-
+    
     public static void main(String[] args) {
 
         //*INTRODUCTION*//
@@ -14,8 +13,8 @@ public class Game {
                                + "Rows are lettered 1-8 with 1 in the bottom left corner. " +
                                "For example, the square A1 is in the bottom left, and H8 in the top right.");
         StdOut.println(
-                "A player wins by capturing all of their opponets pieces. If only one piece remains"
-                        + "but it is cornered and unable to move, type 'c' to concede.");
+                "A player wins by capturing all of their opponets pieces. If all your pieces are cornered"
+                        + "or if you want to end the game, type 'c' to concede.");
         StdOut.println("Player 1, type your name.");
         String p1 = StdIn.readString();
         Player player1 = new Player(true);
@@ -34,10 +33,18 @@ public class Game {
 
             // PLAYER 1 TURN//
             StdOut.print(
-                    p1 + ", what square is the piece you want to move CURRENTLY on? ");
+                    p1
+                            + ", what square is the piece you want to move CURRENTLY on? ");
             StdOut.println(
-                    "Please remember to use the associated number and letter of the square (e.g. e1)");
+                    "Please remember to use the associated number and letter of the square (e.g. e1)"
+                            + " Press c to concede");
+
             String oldplace = StdIn.readString();
+            if (oldplace.toLowerCase().equals("c")) {
+                go = false;
+                player1.conceded();
+                break;
+            }
 
             // checks to make sure its a valid square
             boolean validMove = gameboard.canItMoveThereIntially(oldplace, player1);
@@ -77,8 +84,13 @@ public class Game {
 
             // if it can't move somewhere via moves or jumping, coaxes player to change input
             while (!e && !f) {
-                System.out.println("Not a valid move. Pick a new destination.");
+                System.out.println("Not a valid move. Pick a new destination. Type c to concede");
                 String ple = StdIn.readString();
+                if (ple.toLowerCase().equals("c")) {
+                    go = false;
+                    player1.conceded();
+                    break;
+                }
                 boolean v = gameboard.canItMoveThereAfter(ple);
                 while (!v) {
                     System.out.println("Not a valid square. Please try again.");
@@ -97,6 +109,7 @@ public class Game {
             // if the piece can jump, asks if they want to jump again
             if (f) {
                 current.jump(oldRow, oldColumn, newRow, newColumn, gameboard);
+                player1.capture();
                 gameboard.update();
                 gameboard.drawBoard();
                 gameboard.drawPieces();
@@ -110,7 +123,7 @@ public class Game {
                     answer = StdIn.readString().toLowerCase();
                     if (answer.equals("y")) {
                         System.out.println(
-                                p1 + ", what square would you like to move your piece to?");
+                                p1 + ", what square would you like to move your piece to? ");
                         String newDestination = StdIn.readString();
 
                         // checks to make sure destination is a valid square
@@ -131,14 +144,20 @@ public class Game {
                         if (isValidJump) {
                             current.jump(newRow, newColumn, newR, newC,
                                          gameboard);
+                            player1.capture();
                             current = gameboard.getPieceOnSquare(newRow, newColumn);
                         }
                         while (!isValidJump) {
                             StdOut.println("Not a valid move. Pick a new destination. "
-                                                   + "Or type q to end your turn.");
+                                                   + "Or type q to end your turn. Type c to concede");
                             String pl = StdIn.readString();
                             if (pl.toLowerCase().equals("q")) {
                                 stay = false;
+                                break;
+                            }
+                            if (pl.toLowerCase().equals("c")) {
+                                go = false;
+                                player1.conceded();
                                 break;
                             }
                             boolean canIt = gameboard.canItMoveThereAfter(pl);
@@ -174,26 +193,25 @@ public class Game {
 
 
             // checks to make sure game isn't over
-            if (!player1.gameOver(gameboard) || !player2.gameOver(gameboard)) {
+            if (player2.gameOver() || player1.hasConceded() ||
+                    player1.gameOver() || player2.hasConceded()) {
+                go = false;
                 break;
             }
 
-            // if (newRow == 7 && current.getColor()) {
-            //     StdOut.println(current.availableMove(newRow, newColumn,
-            //                                          current.getColor(), gameboard));
-            //     StdOut.println(current.availableJump(newRow, newColumn,
-            //                                          current.getColor(), gameboard));
-            //     if (!current.isKing()) {
-            //         StdOut.println("Red Stone");
-            //     }
-            // }
 
             // PLAYER 2 TURN//
             StdOut.print(
                     p2 + ", what square is the piece you want to move CURRENTLY on? ");
             StdOut.println(
-                    "Please remember to use the associated number and letter of the square (e.g. e1)");
+                    "Please remember to use the associated number and letter of the square (e.g. e1)"
+                            + "  Press c to concede.");
             String op = StdIn.readString();
+            if (op.toLowerCase().equals("c")) {
+                go = false;
+                player1.conceded();
+                break;
+            }
 
             // checks to make sure its a valid square
             boolean vm = gameboard.canItMoveThereIntially(op, player2);
@@ -233,8 +251,13 @@ public class Game {
 
             // if it can't move somewhere via moves or jumping, coaxes player to change input
             while (!ee && !ff) {
-                System.out.println("Not a valid move. Pick a new destination.");
+                System.out.println("Not a valid move. Pick a new destination. Type c to concede");
                 String ple = StdIn.readString();
+                if (ple.toLowerCase().equals("c")) {
+                    go = false;
+                    player2.conceded();
+                    break;
+                }
                 boolean v = gameboard.canItMoveThereAfter(ple);
                 while (!v) {
                     System.out.println("Not a valid square. Please try again.");
@@ -255,6 +278,7 @@ public class Game {
             if (ff) {
                 current2.jump(oldRow2, oldColumn2, newRow2, newColumn2,
                               gameboard);
+                player2.capture();
                 gameboard.update();
                 gameboard.drawBoard();
                 gameboard.drawPieces();
@@ -288,14 +312,20 @@ public class Game {
                         if (isValidJump2) {
                             current2.jump(newRow2, newColumn2, newR2, newC2,
                                           gameboard);
+                            player2.capture();
                             current2 = gameboard.getPieceOnSquare(newRow2, newColumn2);
                         }
                         while (!isValidJump2) {
                             StdOut.println(
-                                    "Not a valid move. Pick a new destination. Or type q to end move.");
+                                    "Not a valid move. Pick a new destination. Or type q to end move. Type c to concede");
                             String pl2 = StdIn.readString();
                             if (pl2.toLowerCase().equals("q")) {
                                 stay2 = false;
+                                break;
+                            }
+                            if (pl2.toLowerCase().equals("c")) {
+                                go = false;
+                                player2.conceded();
                                 break;
                             }
                             boolean canIt2 = gameboard.canItMoveThereAfter(pl2);
@@ -333,21 +363,17 @@ public class Game {
             gameboard.drawPieces();
 
             // checks to make sure game isn't over
-            if (!player2.gameOver(gameboard) || !player1.gameOver(gameboard)) {
+            if (player1.gameOver() || player2.hasConceded() ||
+                    player2.gameOver() || player1.hasConceded()) {
+                go = false;
                 break;
             }
 
             StdOut.println("That's the end of this round!");
-            // if (newRow2 == 0 && !current2.getColor()) {
-            //     StdOut.println(current2.availableMove(newRow2, newColumn2,
-            //                                           current2.getColor(), gameboard));
-            //     StdOut.println(current2.availableJump(newRow2, newColumn2,
-            //                                           current2.getColor(), gameboard));
-            // }
 
         }
         StdOut.println("GAME OVER!");
-        if (player1.gameOver(gameboard)) {
+        if (player1.gameOver() || player2.hasConceded()) {
             StdOut.println("Congratulations " + p1 + " on your win.");
         }
         else {

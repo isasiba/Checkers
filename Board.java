@@ -194,47 +194,59 @@ public class Board {
             King temp = new King(false, 3, 1);
             this.getSquare(0, 1).setPiece(temp);
         }
-        else if (!this.getSquare(0, 3).getPiece().getColor() &&
+        if (!this.getSquare(0, 3).getPiece().getColor() &&
                 this.getSquare(0, 3).isOccupied()) {
             this.getSquare(0, 3).leave();
             King temp = new King(false, 7, 1);
             this.getSquare(0, 3).setPiece(temp);
         }
-        else if (!this.getSquare(0, 5).getPiece().getColor() &&
+        if (!this.getSquare(0, 5).getPiece().getColor() &&
                 this.getSquare(0, 5).isOccupied()) {
             this.getSquare(0, 5).leave();
             King temp = new King(false, 11, 1);
             this.getSquare(0, 5).setPiece(temp);
         }
-        else if (!this.getSquare(0, 7).getPiece().getColor() &&
+        if (!this.getSquare(0, 7).getPiece().getColor() &&
                 this.getSquare(0, 7).isOccupied()) {
             this.getSquare(0, 7).leave();
             King temp = new King(false, 15, 1);
             this.getSquare(0, 7).setPiece(temp);
         }
-        else if (this.getSquare(7, 0).getPiece().getColor() &&
+        if (this.getSquare(7, 0).getPiece().getColor() &&
                 this.getSquare(7, 0).isOccupied()) {
             this.getSquare(7, 0).leave();
             King temp = new King(true, 1, 15);
             this.getSquare(7, 0).setPiece(temp);
         }
-        else if (this.getSquare(7, 2).getPiece().getColor() &&
-                this.getSquare(7, 0).isOccupied()) {
+        if (this.getSquare(7, 2).getPiece().getColor() &&
+                this.getSquare(7, 2).isOccupied()) {
             this.getSquare(7, 2).leave();
             King temp = new King(true, 5, 15);
             this.getSquare(7, 2).setPiece(temp);
         }
-        else if (this.getSquare(7, 4).getPiece().getColor() &&
-                this.getSquare(7, 0).isOccupied()) {
+        if (this.getSquare(7, 4).getPiece().getColor() &&
+                this.getSquare(7, 4).isOccupied()) {
             this.getSquare(7, 4).leave();
             King temp = new King(true, 9, 15);
             this.getSquare(7, 4).setPiece(temp);
         }
-        else if (this.getSquare(7, 6).getPiece().getColor() &&
-                this.getSquare(7, 0).isOccupied()) {
+        if (this.getSquare(7, 6).getPiece().getColor() &&
+                this.getSquare(7, 6).isOccupied()) {
             this.getSquare(7, 6).leave();
             King temp = new King(true, 13, 15);
             this.getSquare(7, 6).setPiece(temp);
+        }
+    }
+
+    public double getX() {
+        double x = -1;
+        while (true) {
+            if (StdDraw.isMousePressed())
+                this.drawBoard();
+            else
+                this.drawBoard();
+            x = StdDraw.mouseX();
+            return x;
         }
     }
 
@@ -261,6 +273,7 @@ public class Board {
         test.update();
         test.canItMoveThereAfter("b3");
         test.canItMoveThereIntially("b3", new Player(true));
+        StdOut.println(test.getX());
 
 
     }
